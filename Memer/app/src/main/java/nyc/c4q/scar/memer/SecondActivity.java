@@ -1,14 +1,15 @@
 package nyc.c4q.scar.memer;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,6 @@ import java.util.Date;
  */
 public class SecondActivity extends AppCompatActivity implements Serializable {
 
-
     public static Bitmap bm;
     public final String IMAGE_FILE = "image_file";
     private ViewSwitcher viewSwitcher;
@@ -45,13 +45,33 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
     private float fontsize;
     private String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
     private SharedPreferences preferences = null;
+
+    public static SecondActivity getInstance() {
+        return instance;
+    }
+
+    static SecondActivity instance;
+
+    public void setTopColor(int color) {
+        top.setTextColor(color);
+        top.setHintTextColor(color);
+        top.invalidate();
+        bottom.setTextColor(color);
+        bottom.setHintTextColor(color);
+        bottom.invalidate();
+        big.setTextColor(color);
+        big.setHintTextColor(color);
+        big.invalidate();
+        small.setTextColor(color);
+        small.setHintTextColor(color);
+        small.invalidate();
+    }
+
     private EditText top, bottom, big, small;
     private String string1, string2;
 
-
-    //Quick added features
-    private Button colorChange, colorChange2;
-
+    private Button clear;
+    private ColorPicker colorPicker;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -59,14 +79,12 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_second);
         preferences = this.getSharedPreferences(IMAGE_FILE, Context.MODE_PRIVATE);
 
-
         //This loads up the last saved boolean for which layout mode was selected
         if (savedInstanceState != null) {
             isVanilla = (boolean) savedInstanceState.get("isVanilla");
             uri = savedInstanceState.getParcelable("uri");
             uri2 = savedInstanceState.getParcelable("uri2");
         }
-
 
         viewSwitcher = (ViewSwitcher) findViewById(R.id.viewswitcher);
         imageView = (ImageView) findViewById(R.id.insert_pic_id);
@@ -81,132 +99,8 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
         top.setMovementMethod(null);
         bottom.setMovementMethod(null);
 
-
-        //added this feature last minute.
-        colorChange = (Button) findViewById(R.id.change_color_text_id);
-
-        colorChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                big.setTextColor(Color.RED);
-                small.setTextColor(Color.RED);
-                top.setTextColor(Color.RED);
-                bottom.setTextColor(Color.RED);
-
-
-
-                if (isVanilla) {
-                    string1 = top.getText().toString();
-                    string2 = bottom.getText().toString();
-
-                    big.setTextColor(Color.RED);
-                    small.setTextColor(Color.RED);
-                    top.setTextColor(Color.RED);
-                    bottom.setTextColor(Color.RED);
-
-                    big.setText(string1);
-                    small.setText(string2);
-                    isVanilla = !isVanilla;
-                } else {
-                    string1 = big.getText().toString();
-                    string2 = small.getText().toString();
-
-                    big.setTextColor(Color.RED);
-                    small.setTextColor(Color.RED);
-                    top.setTextColor(Color.RED);
-                    bottom.setTextColor(Color.RED);
-
-                    top.setText(string1);
-                    bottom.setText(string2);
-                    isVanilla = true;
-                }
-
-
-
-            }
-        });
-
-        colorChange2 = (Button) findViewById(R.id.change_color_text_id2);
-
-        colorChange2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                big.setTextColor(Color.BLUE);
-                small.setTextColor(Color.BLUE);
-                top.setTextColor(Color.BLUE);
-                bottom.setTextColor(Color.BLUE);
-
-                if (isVanilla) {
-                    string1 = top.getText().toString();
-                    string2 = bottom.getText().toString();
-
-                    big.setTextColor(Color.BLUE);
-                    small.setTextColor(Color.BLUE);
-                    top.setTextColor(Color.BLUE);
-                    bottom.setTextColor(Color.BLUE);
-
-                    big.setText(string1);
-                    small.setText(string2);
-                    isVanilla = !isVanilla;
-                } else {
-                    string1 = big.getText().toString();
-                    string2 = small.getText().toString();
-
-                    big.setTextColor(Color.BLUE);
-                    small.setTextColor(Color.BLUE);
-                    top.setTextColor(Color.BLUE);
-                    bottom.setTextColor(Color.BLUE);
-
-                    top.setText(string1);
-                    bottom.setText(string2);
-                    isVanilla = true;
-                }
-
-            }
-        });
-
-        Button colorChange3 = (Button) findViewById(R.id.change_color_text_id3);
-
-        colorChange3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                big.setTextColor(Color.WHITE);
-                small.setTextColor(Color.WHITE);
-                top.setTextColor(Color.WHITE);
-                bottom.setTextColor(Color.WHITE);
-
-                if (isVanilla) {
-                    string1 = top.getText().toString();
-                    string2 = bottom.getText().toString();
-
-                    big.setTextColor(Color.WHITE);
-                    small.setTextColor(Color.WHITE);
-                    top.setTextColor(Color.WHITE);
-                    bottom.setTextColor(Color.WHITE);
-
-                    big.setText(string1);
-                    small.setText(string2);
-                    isVanilla = !isVanilla;
-                } else {
-                    string1 = big.getText().toString();
-                    string2 = small.getText().toString();
-
-                    big.setTextColor(Color.WHITE);
-                    small.setTextColor(Color.WHITE);
-                    top.setTextColor(Color.WHITE);
-                    bottom.setTextColor(Color.WHITE);
-
-                    top.setText(string1);
-                    bottom.setText(string2);
-                    isVanilla = true;
-                }
-
-            }
-        });
-
+        clear = (Button) findViewById(R.id.clearButton);
+        colorPicker = (ColorPicker) findViewById(R.id.colorPicker);
 
         //This loads up dialog
         changeImage.setOnClickListener(new View.OnClickListener() {
@@ -215,11 +109,9 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
                 showListViewDialog();
             }
         });
-
         shareImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 top.setCursorVisible(false);
                 bottom.setCursorVisible(false);
@@ -233,11 +125,9 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
                     if (bottom.getText().toString().matches("")) {
                         bottom.setVisibility(View.GONE);
                     }
-
                     Bitmap bm = v1.getDrawingCache();
 
                     uri2 = getImageUri(getApplicationContext(), bm);
-
 
                     Intent shareIntent = new Intent();
                     SharedPreferences.Editor editor = preferences.edit();
@@ -262,7 +152,6 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
 
                         uri2 = getImageUri(getApplicationContext(), bm);
 
-
                         Intent shareIntent = new Intent();
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putInt("image_file", MODE_PRIVATE);
@@ -275,11 +164,8 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
                         startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.app_name)));
                     }
                 }
-
-
             }
         });
-
 
         // Hides editText is nothing has been entered, brings it back after image has been saved
         saveImage.setOnClickListener(new View.OnClickListener() {
@@ -354,13 +240,14 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
         imageView.setImageURI(uri);
         imageView2.setImageURI(uri);
 
-
         //This sets the layout according to which layout mode is selected
         if (isVanilla) {
             Typeface impact = Typeface.createFromAsset(getAssets(), "Impact.ttf");
             top.setTypeface(impact);
             bottom.setTypeface(impact);
         }
+
+        instance = this;
     }
 
     @Override
@@ -401,6 +288,7 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
     }
 
     //This handles the activity for the intent: using the camera and choosing from a gallery.
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -434,10 +322,8 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
                     intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageFileUri);
                     if (intent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(intent, 0);
-
                     }
                 }
-
                 if (items[which].equalsIgnoreCase("Gallery")) {
                     intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 1);
@@ -455,6 +341,13 @@ public class SecondActivity extends AppCompatActivity implements Serializable {
         toSave.putParcelable("luckyM", uri);
         toSave.putParcelable("luckyM2", uri2);
         toSave.putBoolean("isVanilla", isVanilla);
+    }
+
+    public void clear(View V) {
+        top.setText("");
+        bottom.setText("");
+        big.setText("");
+        small.setText("");
     }
 }
 

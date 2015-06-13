@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="5"
             android:orientation="horizontal">
 
@@ -47,46 +47,43 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/change_color_text_id"
+                <nyc.c4q.scar.memer.ColorPicker
+                    android:id="@+id/colorPicker"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="RED"
+                    android:layout_gravity="center"
                     style="@style/CamButtons"/>
 
-                <Button
-                    android:id="@+id/change_color_text_id2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="BLUE"
-                    style="@style/CamButtons"/>
-
-                <Button
-                    android:id="@+id/change_color_text_id3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="WHITE"
-                    style="@style/CamButtons"/>
             </LinearLayout>
         </LinearLayout>
 
-
-        <Button
-            android:id="@+id/switcherButton"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/switch_button"
-            android:padding="10px"
-            android:text="SWITCH LAYOUT"
-            android:textColor="#FFF"
-            android:textSize="40px" />
-
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/switcherButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/switch_button"
+                android:padding="10px"
+                android:text="SWITCH LAYOUT"
+                android:textColor="#FFF"
+                android:textSize="40px"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/clearButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/switch_button"
+                android:padding="10px"
+                android:text="Clear"
+                android:textColor="#FFF"
+                android:textSize="40px"
+                android:layout_weight="2"
+                android:onClick="clear"/>
+        </LinearLayout>
 
     </LinearLayout>
-
 
     <ViewSwitcher
         android:id="@+id/viewswitcher"
@@ -98,14 +95,12 @@
         android:inAnimation="@android:anim/slide_in_left"
         android:outAnimation="@android:anim/slide_out_right">
 
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical">
-
 
             <ImageView
                 android:id="@+id/insert_pic_id"
@@ -157,9 +152,7 @@
                 android:textSize="60sp" />
             \
 
-
         </RelativeLayout>
-
 
         <LinearLayout
             android:id="@+id/demoMeme"
@@ -169,7 +162,6 @@
             android:background="@drawable/demo_poster"
             android:gravity="center"
             android:orientation="vertical">
-
 
             <ImageView
                 android:id="@+id/insert_pic_id2"
@@ -223,9 +215,7 @@
                 android:textColorHint="#FFF"
                 android:textSize="30px" />
 
-
         </LinearLayout>
-
 
     </ViewSwitcher>
 
